@@ -1,0 +1,23 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: orders-api
+  owner: team-a
+spec:
+  archetype: microservices
+  cloud: aws
+  tier: silver
+  size: M
+  cost_profile: balanced
+  arch: arm64
+  data_class: confidential
+  network: private
+  integrations: [object-storage, event-bus, secrets]
+  environments: [dev, stage, uat, prod]
+  lifecycle: persistent
+  databases:
+    - name: orders-db
+      model: relational
+      engine: postgres
+      size: M
+      storage_gb: 100

@@ -1,0 +1,25 @@
+# OpenTofu
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Pipeline outputs (tracked by devops/pipeline artifact-record, never committed)
+gp-artifacts/
+artifact-manifest.json
+
+# Build output
+dist/
+bin/
+
+# OS and editors
+.DS_Store
+*.swp
+.idea/
+.vscode/

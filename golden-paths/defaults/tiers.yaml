@@ -1,0 +1,21 @@
+# What each tier sets. Starting targets; confirm with app owners.
+# Three-tier paths use at least two zones even on bronze.
+tiers:
+  bronze:
+    zones: 1
+    slo: 99.0
+    sla: null
+    paging: business-hours
+    database: {availability: single-zone, backups: daily, retention_days: 7, pitr: false, rpo: 24h, rto: 8h, restore_test: quarterly}
+  silver:
+    zones: 2
+    slo: 99.5
+    sla: null
+    paging: 24x7-fast-burn
+    database: {availability: zone-standby, backups: daily, retention_days: 14, pitr: true, rpo: 15m, rto: 1h, restore_test: quarterly}
+  gold:
+    zones: 3
+    slo: 99.9
+    sla: 99.5   # only if customer-facing, and only after a full quarter at SLO
+    paging: 24x7
+    database: {availability: multi-zone-plus-cross-region-replica, backups: pitr, retention_days: 35, pitr: true, copy_to_second_region: true, rpo: 5m, rto: 30m, restore_test: monthly}

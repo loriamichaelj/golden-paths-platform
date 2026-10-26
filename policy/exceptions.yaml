@@ -1,0 +1,8 @@
+# Template for an app's .security/exceptions.yaml. gate.py reads it; inline #checkov:skip is not allowed.
+# Every entry needs an owner and an expiry within 180 days; expired entries fail the gate.
+exceptions: []
+#  - check: CKV_AWS_18
+#    resource: module.path.aws_s3_bucket.logs
+#    reason: Access logs for the log bucket itself would loop
+#    owner: team-a
+#    expires: 2027-04-01

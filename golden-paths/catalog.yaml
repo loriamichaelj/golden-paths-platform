@@ -1,0 +1,33 @@
+# Archetypes, the runtime each runs on, and the modules each path bundles.
+# Service names change often; verify each before building its module.
+runtimes:
+  serverless-containers: {aws: ECS on Fargate, azure: Azure Container Apps, gcp: Cloud Run}
+  kubernetes: {aws: EKS, azure: AKS, gcp: GKE Standard}
+  serverless-kubernetes: {aws: EKS Auto Mode, azure: AKS Automatic, gcp: GKE Autopilot}
+  vm: {aws: EC2 launch template + Auto Scaling group, azure: VM Scale Sets (Flexible), gcp: instance template + managed instance group}
+
+archetypes:
+  single-api:
+    runtime: {default: serverless-containers, dev: serverless-containers}
+    modules: [network, identity, secrets, serverless-containers, load-balancer]
+  microservices:
+    runtime: {default: kubernetes, dev: serverless-kubernetes}
+    modules: [network, identity, secrets, kubernetes]
+    addons: [argo-cd, istio]
+  event-driven:
+    runtime: {default: kubernetes, dev: serverless-kubernetes}
+    modules: [network, identity, secrets, kubernetes, event-queue]
+    addons: [argo-cd, keda]
+  microservices-events:
+    runtime: {default: kubernetes, dev: serverless-kubernetes}
+    modules: [network, identity, secrets, kubernetes, event-stream, event-queue]
+    addons: [argo-cd, istio, keda]
+  three-tier:
+    runtime: {default: serverless-containers, dev: serverless-containers}
+    modules: [network, identity, secrets, object-storage, cdn, waf, load-balancer, serverless-containers, database-relational, cache]
+  vm-workload:
+    runtime: {default: vm, dev: vm}
+    modules: [network, identity, secrets, compute-vm, load-balancer]
+  custom:
+    runtime: team-composed
+    modules: any catalog module, within the guardrails gold validate enforces
