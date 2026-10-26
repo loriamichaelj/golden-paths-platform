@@ -1,0 +1,78 @@
+{
+  "check_type": "terraform",
+  "results": {
+    "passed_checks": [],
+    "failed_checks": [
+      {
+        "check_id": "CKV_AWS_24",
+        "check_name": "Ensure no security groups allow ingress from 0.0.0.0:0 to port 22",
+        "file_path": "/infra/main.tf",
+        "file_line_range": [
+          5,
+          14
+        ],
+        "resource": "aws_security_group.open",
+        "severity": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-1-port-security"
+      },
+      {
+        "check_id": "CKV_AWS_23",
+        "check_name": "Ensure every security group and rule has a description",
+        "file_path": "/infra/main.tf",
+        "file_line_range": [
+          5,
+          14
+        ],
+        "resource": "aws_security_group.open",
+        "severity": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/networking-31"
+      },
+      {
+        "check_id": "CKV2_AWS_5",
+        "check_name": "Ensure that Security Groups are attached to another resource",
+        "file_path": "/infra/main.tf",
+        "file_line_range": [
+          5,
+          14
+        ],
+        "resource": "aws_security_group.open",
+        "severity": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/ensure-that-security-groups-are-attached-to-ec2-instances-or-elastic-network-interfaces-enis"
+      },
+      {
+        "check_id": "CKV2_AWS_62",
+        "check_name": "Ensure S3 buckets should have event notifications enabled",
+        "file_path": "/infra/main.tf",
+        "file_line_range": [
+          1,
+          3
+        ],
+        "resource": "aws_s3_bucket.logs",
+        "severity": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-logging-policies/bc-aws-2-62"
+      },
+      {
+        "check_id": "CKV2_AWS_6",
+        "check_name": "Ensure that S3 bucket has a Public Access block",
+        "file_path": "/infra/main.tf",
+        "file_line_range": [
+          1,
+          3
+        ],
+        "resource": "aws_s3_bucket.logs",
+        "severity": null,
+        "guideline": "https://docs.prismacloud.io/en/enterprise-edition/policy-reference/aws-policies/aws-networking-policies/s3-bucket-should-have-public-access-blocks-defaults-to-false-if-the-public-access-block-is-not-attached"
+      }
+    ],
+    "skipped_checks": [],
+    "parsing_errors": []
+  },
+  "summary": {
+    "passed": 8,
+    "failed": 10,
+    "skipped": 0,
+    "parsing_errors": 0,
+    "resource_count": 2,
+    "checkov_version": "3.3.27"
+  }
+}

@@ -1,0 +1,7 @@
+# Reviewed exceptions to the scan gate. Each needs an owner and an expiry within 180 days.
+exceptions:
+  - check: CKV_DOCKER_2
+    path: images/scanner/Dockerfile
+    reason: The scanner image runs one scan and exits; it is not a long-running service, so a health check does not apply
+    owner: team-platform
+    expires: 2027-04-01

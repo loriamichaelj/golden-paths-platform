@@ -23,3 +23,8 @@ bin/
 *.swp
 .idea/
 .vscode/
+
+# Python
+__pycache__/
+*.pyc
+.scan-out/
