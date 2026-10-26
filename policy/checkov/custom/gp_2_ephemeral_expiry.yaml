@@ -1,0 +1,17 @@
+metadata:
+  id: "CKV2_GP_2"
+  name: "Ephemeral resources carry an expires_at tag for the sweeper (AWS, Azure)"
+  category: "GENERAL_SECURITY"
+scope:
+  provider: "aws"
+definition:
+  or:
+    - cond_type: "attribute"
+      resource_types: ["aws_instance", "aws_ebs_volume", "aws_s3_bucket", "aws_vpc", "aws_subnet", "aws_route_table", "aws_security_group", "aws_lb", "aws_lb_target_group", "aws_ecs_cluster", "aws_ecs_service", "aws_db_instance", "aws_rds_cluster", "aws_elasticache_replication_group", "aws_kms_key", "aws_secretsmanager_secret", "aws_sqs_queue", "aws_sns_topic", "aws_eks_cluster", "aws_eks_node_group", "aws_cloudfront_distribution", "aws_wafv2_web_acl", "aws_msk_cluster", "aws_dynamodb_table", "aws_lambda_function", "aws_cloudwatch_log_group", "aws_iam_role", "azurerm_resource_group", "azurerm_virtual_network", "azurerm_network_security_group", "azurerm_container_app", "azurerm_container_app_environment", "azurerm_kubernetes_cluster", "azurerm_key_vault", "azurerm_storage_account", "azurerm_postgresql_flexible_server", "azurerm_servicebus_namespace", "azurerm_eventhub_namespace", "azurerm_linux_virtual_machine_scale_set", "azurerm_lb", "azurerm_cdn_frontdoor_profile", "azurerm_user_assigned_identity", "azurerm_log_analytics_workspace"]
+      attribute: "tags.lifecycle"
+      operator: "not_equals"
+      value: "ephemeral"
+    - cond_type: "attribute"
+      resource_types: ["aws_instance", "aws_ebs_volume", "aws_s3_bucket", "aws_vpc", "aws_subnet", "aws_route_table", "aws_security_group", "aws_lb", "aws_lb_target_group", "aws_ecs_cluster", "aws_ecs_service", "aws_db_instance", "aws_rds_cluster", "aws_elasticache_replication_group", "aws_kms_key", "aws_secretsmanager_secret", "aws_sqs_queue", "aws_sns_topic", "aws_eks_cluster", "aws_eks_node_group", "aws_cloudfront_distribution", "aws_wafv2_web_acl", "aws_msk_cluster", "aws_dynamodb_table", "aws_lambda_function", "aws_cloudwatch_log_group", "aws_iam_role", "azurerm_resource_group", "azurerm_virtual_network", "azurerm_network_security_group", "azurerm_container_app", "azurerm_container_app_environment", "azurerm_kubernetes_cluster", "azurerm_key_vault", "azurerm_storage_account", "azurerm_postgresql_flexible_server", "azurerm_servicebus_namespace", "azurerm_eventhub_namespace", "azurerm_linux_virtual_machine_scale_set", "azurerm_lb", "azurerm_cdn_frontdoor_profile", "azurerm_user_assigned_identity", "azurerm_log_analytics_workspace"]
+      attribute: "tags.expires_at"
+      operator: "exists"

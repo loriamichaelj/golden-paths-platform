@@ -1,0 +1,24 @@
+metadata:
+  id: "CKV2_GP_5"
+  name: "Every resource carries owner, env, lifecycle and golden_path labels (GCP)"
+  category: "GENERAL_SECURITY"
+scope:
+  provider: "gcp"
+definition:
+  and:
+    - cond_type: "attribute"
+      resource_types: ["google_compute_instance", "google_compute_disk", "google_storage_bucket", "google_cloud_run_v2_service", "google_pubsub_topic", "google_pubsub_subscription", "google_secret_manager_secret", "google_kms_crypto_key", "google_redis_instance", "google_compute_forwarding_rule"]
+      attribute: "labels.owner"
+      operator: "exists"
+    - cond_type: "attribute"
+      resource_types: ["google_compute_instance", "google_compute_disk", "google_storage_bucket", "google_cloud_run_v2_service", "google_pubsub_topic", "google_pubsub_subscription", "google_secret_manager_secret", "google_kms_crypto_key", "google_redis_instance", "google_compute_forwarding_rule"]
+      attribute: "labels.env"
+      operator: "exists"
+    - cond_type: "attribute"
+      resource_types: ["google_compute_instance", "google_compute_disk", "google_storage_bucket", "google_cloud_run_v2_service", "google_pubsub_topic", "google_pubsub_subscription", "google_secret_manager_secret", "google_kms_crypto_key", "google_redis_instance", "google_compute_forwarding_rule"]
+      attribute: "labels.lifecycle"
+      operator: "exists"
+    - cond_type: "attribute"
+      resource_types: ["google_compute_instance", "google_compute_disk", "google_storage_bucket", "google_cloud_run_v2_service", "google_pubsub_topic", "google_pubsub_subscription", "google_secret_manager_secret", "google_kms_crypto_key", "google_redis_instance", "google_compute_forwarding_rule"]
+      attribute: "labels.golden_path"
+      operator: "exists"

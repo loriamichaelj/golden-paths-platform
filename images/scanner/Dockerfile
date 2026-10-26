@@ -31,8 +31,8 @@ RUN pip install --no-cache-dir "checkov==${CHECKOV_VERSION}" && pip check
 
 COPY --chmod=0755 images/scanner/gate.py /usr/local/bin/gate.py
 COPY --chmod=0755 images/scanner/gold_scan.py /usr/local/bin/gold-scan
-# Custom golden-path checks go in /opt/gold/checkov/custom with an optional config.yaml.
-RUN mkdir -p /opt/gold/checkov
+# The golden-path policies (CKV2_GP_*); gold-scan loads /opt/gold/checkov/custom automatically.
+COPY policy/checkov/ /opt/gold/checkov/
 
 RUN useradd --uid 10001 --create-home scanner
 ENV PYTHONDONTWRITEBYTECODE=1 \

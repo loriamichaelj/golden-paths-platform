@@ -1,0 +1,18 @@
+metadata:
+  id: "CKV2_GP_8"
+  name: "Three-tier app tier on Container Apps is internal"
+  category: "NETWORKING"
+scope:
+  provider: "azure"
+definition:
+  or:
+    - cond_type: "attribute"
+      resource_types: ["azurerm_container_app_environment"]
+      attribute: "tags.gp_role"
+      operator: "not_equals"
+      value: "app"
+    - cond_type: "attribute"
+      resource_types: ["azurerm_container_app_environment"]
+      attribute: "internal_load_balancer_enabled"
+      operator: "equals"
+      value: true

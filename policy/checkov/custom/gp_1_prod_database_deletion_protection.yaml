@@ -1,0 +1,18 @@
+metadata:
+  id: "CKV2_GP_1"
+  name: "Prod databases have deletion protection"
+  category: "BACKUP_AND_RECOVERY"
+scope:
+  provider: "aws"
+definition:
+  or:
+    - cond_type: "attribute"
+      resource_types: ["aws_db_instance", "aws_rds_cluster"]
+      attribute: "tags.env"
+      operator: "not_equals"
+      value: "prod"
+    - cond_type: "attribute"
+      resource_types: ["aws_db_instance", "aws_rds_cluster"]
+      attribute: "deletion_protection"
+      operator: "equals"
+      value: true

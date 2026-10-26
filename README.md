@@ -1,7 +1,3 @@
 # platform
 
-Landing zones, per-cloud modules, golden-path definitions, policy and the `gold` CLI.
-
-App repos consume tagged releases of this repo: path modules by `paths-v*` tags, policy by `policy-v*`, scripts by `scripts-v*`, and the `gold` binary from the package registry. CI/CD components live in the `devops/pipeline` repo.
-
-The contract every app fills in is defined by `golden-paths/schema/golden-path.schema.json`; `golden-paths/examples/` has a valid contract per archetype.
+Platform holds the golden-path definitions that app teams build on: the contract schema, the catalog of app types and their per-cloud building blocks, the size and tier defaults, and an example contract for every app type. It also ships the `gold` command-line tool, which validates, explains and generates contracts from the same embedded data, and a scanner image that runs Trivy, Checkov and the golden-path policies and decides pass or fail in one gate with reviewed, expiring exceptions. Run `gold validate golden-path.yaml` to check a contract, `go test ./...` inside `cli/` for the tool's tests, and `python3 -m unittest discover -s tests/unit` for the scanner's.

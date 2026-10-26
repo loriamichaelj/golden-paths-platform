@@ -1,0 +1,18 @@
+metadata:
+  id: "CKV2_GP_9"
+  name: "Three-tier app tier on Cloud Run accepts traffic only from the load balancer"
+  category: "NETWORKING"
+scope:
+  provider: "gcp"
+definition:
+  or:
+    - cond_type: "attribute"
+      resource_types: ["google_cloud_run_v2_service"]
+      attribute: "labels.gp_role"
+      operator: "not_equals"
+      value: "app"
+    - cond_type: "attribute"
+      resource_types: ["google_cloud_run_v2_service"]
+      attribute: "ingress"
+      operator: "equals"
+      value: "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
