@@ -1,0 +1,17 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: legacy-batch
+  owner: team-a
+spec:
+  archetype: vm-workload
+  cloud: aws
+  tier: bronze
+  size: L
+  cost_profile: spot-first
+  arch: amd64
+  data_class: internal
+  network: private
+  integrations: [secrets]
+  environments: [dev, stage]
+  lifecycle: persistent

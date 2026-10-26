@@ -1,0 +1,73 @@
+# Archetypes, the runtime each runs on, and the building blocks each path bundles.
+# Service names change often; verify each before building its module.
+version: 1
+
+runtimes:
+  serverless-containers: {aws: ECS on Fargate, azure: Azure Container Apps, gcp: Cloud Run}
+  kubernetes: {aws: EKS, azure: AKS, gcp: GKE Standard}
+  serverless-kubernetes: {aws: EKS Auto Mode, azure: AKS Automatic, gcp: GKE Autopilot}
+  vm: {aws: EC2 launch template + Auto Scaling group, azure: VM Scale Sets (Flexible), gcp: Instance template + managed instance group}
+  team-composed: {aws: Catalog modules chosen by the team, azure: Catalog modules chosen by the team, gcp: Catalog modules chosen by the team}
+
+# One interface per building block, one implementation per cloud.
+# public: the module may be reachable from the internet (custom path guardrail).
+modules:
+  network: {public: false, services: {aws: VPC, azure: Virtual Network, gcp: VPC network}}
+  identity: {public: false, services: {aws: IAM roles and workload identity, azure: Managed identities and workload identity, gcp: Service accounts and workload identity}}
+  secrets: {public: false, services: {aws: Secrets Manager, azure: Key Vault, gcp: Secret Manager}}
+  compute-vm: {public: false, services: {aws: EC2 launch template + Auto Scaling group, azure: VM Scale Sets (Flexible), gcp: Instance template + managed instance group}}
+  serverless-containers: {public: false, services: {aws: ECS on Fargate, azure: Azure Container Apps, gcp: Cloud Run}}
+  kubernetes: {public: false, services: {aws: EKS, azure: AKS, gcp: GKE Standard}}
+  functions: {public: false, services: {aws: Lambda, azure: Azure Functions, gcp: Cloud Functions}}
+  object-storage: {public: true, services: {aws: S3, azure: Blob Storage, gcp: Cloud Storage}}
+  cdn: {public: true, services: {aws: CloudFront, azure: Front Door, gcp: Cloud CDN}}
+  waf: {public: false, services: {aws: AWS WAF, azure: Front Door WAF policy, gcp: Cloud Armor}}
+  load-balancer: {public: true, services: {aws: Application Load Balancer, azure: Application Gateway, gcp: External Application Load Balancer}}
+  dns: {public: false, services: {aws: Route 53, azure: Azure DNS, gcp: Cloud DNS}}
+  certificate: {public: false, services: {aws: AWS Certificate Manager, azure: Key Vault certificates, gcp: Certificate Manager}}
+  cache: {public: false, services: {aws: ElastiCache (Valkey), azure: Azure Managed Redis, gcp: Memorystore (Valkey)}}
+  database-relational: {public: false, services: {aws: Aurora or RDS for PostgreSQL, azure: Azure Database for PostgreSQL (Flexible Server), gcp: Cloud SQL or AlloyDB}}
+  database-document: {public: false, services: {aws: DocumentDB or MongoDB Atlas, azure: Azure DocumentDB or MongoDB Atlas, gcp: Firestore (MongoDB compatibility) or MongoDB Atlas}}
+  database-keyvalue: {public: false, services: {aws: DynamoDB, azure: Cosmos DB (NoSQL API), gcp: Firestore or Bigtable}}
+  event-stream: {public: false, services: {aws: Amazon MSK, azure: Event Hubs (Kafka endpoint), gcp: Managed Service for Apache Kafka}}
+  event-queue: {public: false, services: {aws: SQS with SNS, azure: Service Bus, gcp: Pub/Sub}}
+
+archetypes:
+  single-api:
+    summary: One API on serverless containers
+    runtime: {default: serverless-containers, dev: serverless-containers}
+    modules: [network, identity, secrets, serverless-containers, load-balancer]
+  microservices:
+    summary: Several services on managed Kubernetes with a service mesh
+    runtime: {default: kubernetes, dev: serverless-kubernetes}
+    modules: [network, identity, secrets, kubernetes]
+    addons: [argo-cd, istio]
+  event-driven:
+    summary: Consumers scaled by event backlog on managed Kubernetes
+    runtime: {default: kubernetes, dev: serverless-kubernetes}
+    modules: [network, identity, secrets, kubernetes, event-queue]
+    addons: [argo-cd, keda]
+  microservices-events:
+    summary: Services that call each other and publish events
+    runtime: {default: kubernetes, dev: serverless-kubernetes}
+    modules: [network, identity, secrets, kubernetes, event-stream, event-queue]
+    addons: [argo-cd, istio, keda]
+  three-tier:
+    summary: Web on a CDN, app on serverless containers, managed PostgreSQL
+    runtime: {default: serverless-containers, dev: serverless-containers}
+    modules: [network, identity, secrets, object-storage, cdn, waf, load-balancer, serverless-containers, database-relational, cache]
+  vm-workload:
+    summary: Virtual machines in an autoscaling group
+    runtime: {default: vm, dev: vm}
+    modules: [network, identity, secrets, compute-vm, load-balancer]
+  custom:
+    summary: An approved exception composed from catalog modules
+    runtime: {default: team-composed, dev: team-composed}
+    modules: []
+    composed: true
+
+# Guardrails gold validate enforces on spec.custom.
+custom:
+  max_review_days: 180
+  max_components: 12
+  locked_inputs: [encryption, public_access, deletion_protection, logging, backups, tls_version]

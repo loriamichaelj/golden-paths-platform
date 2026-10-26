@@ -1,0 +1,6 @@
+# Size to CPU and memory range, the same on every cloud.
+sizes:
+  S: {vcpu: [1, 2], memory_gib: [2, 4]}
+  M: {vcpu: [2, 4], memory_gib: [8, 16]}
+  L: {vcpu: [4, 8], memory_gib: [16, 32]}
+  XL: {vcpu: [8, 16], memory_gib: [32, 64]}

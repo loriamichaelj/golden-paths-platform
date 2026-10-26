@@ -1,0 +1,17 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: order-events
+  owner: team-a
+spec:
+  archetype: event-driven
+  cloud: aws
+  tier: silver
+  size: M
+  cost_profile: balanced
+  arch: arm64
+  data_class: internal
+  network: private
+  integrations: [event-bus, secrets]
+  environments: [dev, stage, prod]
+  lifecycle: persistent

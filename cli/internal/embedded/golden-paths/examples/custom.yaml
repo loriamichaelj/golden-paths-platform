@@ -1,0 +1,30 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: media-gateway
+  owner: team-a
+spec:
+  archetype: custom
+  cloud: aws
+  tier: silver
+  size: M
+  cost_profile: balanced
+  arch: arm64
+  data_class: internal
+  network: public
+  integrations: [secrets]
+  environments: [dev, stage, prod]
+  lifecycle: persistent
+  custom:
+    justification: Streams large media files through a licensed transcoder that no default path can host
+    exception_ref: https://example.com/exceptions/EX-1
+    review_by: "2027-01-15"
+    budget_usd_month: 900
+    components:
+      - {name: edge, module: cdn, public: true}
+      - {name: api, module: serverless-containers, size: M}
+      - {name: assets, module: object-storage}
+    connections:
+      - {source: internet, destination: edge, port: 443}
+      - {source: edge, destination: api, port: 443}
+      - {source: api, destination: assets, port: 443}

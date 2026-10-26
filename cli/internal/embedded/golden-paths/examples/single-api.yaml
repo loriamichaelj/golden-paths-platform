@@ -1,0 +1,17 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: hello-api
+  owner: team-a
+spec:
+  archetype: single-api
+  cloud: aws
+  tier: bronze
+  size: S
+  cost_profile: balanced
+  arch: arm64
+  data_class: internal
+  network: private
+  integrations: [secrets]
+  environments: [dev, stage, prod]
+  lifecycle: persistent

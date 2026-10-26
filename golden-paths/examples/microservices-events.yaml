@@ -1,0 +1,27 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: checkout
+  owner: team-a
+spec:
+  archetype: microservices-events
+  cloud: aws
+  tier: gold
+  size: L
+  cost_profile: balanced
+  arch: arm64
+  data_class: confidential
+  network: private
+  integrations: [object-storage, event-bus, secrets]
+  environments: [dev, stage, uat, prod]
+  lifecycle: persistent
+  services: [orders-api, payments, inventory, notifications]
+  events:
+    broker: stream
+    schemas: asyncapi.yaml
+  databases:
+    - name: orders-db
+      model: relational
+      engine: postgres
+      size: M
+      storage_gb: 100

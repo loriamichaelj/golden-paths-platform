@@ -1,0 +1,29 @@
+apiVersion: platform.example.com/v1
+kind: GoldenPath
+metadata:
+  name: storefront
+  owner: team-a
+spec:
+  archetype: three-tier
+  cloud: aws
+  tier: silver
+  size: M
+  cost_profile: balanced
+  arch: arm64
+  data_class: confidential
+  network: public
+  integrations: [secrets]
+  environments: [dev, stage, uat, prod]
+  lifecycle: persistent
+  web:
+    - name: storefront
+      path: web
+      render: static
+      domain: shop.example.com
+      waf: managed-rules
+  databases:
+    - name: store-db
+      model: relational
+      engine: postgres
+      size: M
+      storage_gb: 100
