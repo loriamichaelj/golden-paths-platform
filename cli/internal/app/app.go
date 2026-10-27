@@ -40,6 +40,9 @@ Usage:
   gold explain [--format text|json] [path]
   gold init --archetype <type> --cloud <cloud> --name <app> --owner <team> [--out file] [--force]
   gold catalog list|show <archetype>|modules|schema [--format text|json]
+  gold skill install [--scope user|project] [--dir folder] [--force]
+  gold skill print
+  gold doctor [--strict] [--format text|json]
   gold version
 
 A path is a golden-path.yaml file or a folder that holds one; the default is
@@ -62,6 +65,10 @@ func (a *App) Run(args []string) int {
 		return a.initCmd(args[1:])
 	case "catalog":
 		return a.catalog(args[1:])
+	case "skill":
+		return a.skillCmd(args[1:])
+	case "doctor":
+		return a.doctor(args[1:])
 	case "version", "--version":
 		fmt.Fprintf(a.Out, "gold %s\n", a.Version)
 		return exitOK

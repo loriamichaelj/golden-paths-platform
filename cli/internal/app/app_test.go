@@ -22,8 +22,17 @@ type run struct {
 func gold(t *testing.T, env map[string]string, args ...string) run {
 	t.Helper()
 	var out, errb bytes.Buffer
+	home := t.TempDir()
 	a := &App{Out: &out, Err: &errb, Now: func() time.Time { return fixedNow }, Version: "test",
-		Getenv: func(k string) string { return env[k] }}
+		Getenv: func(k string) string {
+			if v, ok := env[k]; ok {
+				return v
+			}
+			if k == "HOME" {
+				return home // never the real home folder
+			}
+			return ""
+		}}
 	return run{a.Run(args), out.String(), errb.String()}
 }
 
